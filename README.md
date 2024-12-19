@@ -1,7 +1,7 @@
 # Expense Tracker  
 
 ## Overview  
-The **Expense Tracker** is a lightweight command-line application that allows users to add, remove, view, and total their expenses. It’s designed to be simple and efficient for tracking expenses in a single session.  
+This is a simple expense tracker application written in Python. It allows you to add, remove, view, and calculate the total of your expenses. The expenses are stored in an SQLite database.
 
 ---
 
