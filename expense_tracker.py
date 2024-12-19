@@ -28,12 +28,17 @@ class ExpenseTracker:
         self.conn.commit()
         print("Expense added")
     
-    def remove_expense(self, expense):
-        self.cursor.execute('''
-            DELETE FROM expenses WHERE id = ?
-        ''', (expense.id,))
-        self.conn.commit()
-        print("Expense removed")
+    def remove_expense(self, expense_id):
+        self.cursor.execute('SELECT * FROM expenses WHERE id = ?', (expense_id,))
+        expense = self.cursor.fetchone()
+        if expense is None:
+            print("Error: Expense ID not found")
+        else:
+            self.cursor.execute('''
+                DELETE FROM expenses WHERE id = ?
+            ''', (expense_id,))
+            self.conn.commit()
+            print("Expense removed")
 
     def view_expenses(self):
         self.cursor.execute('SELECT * FROM expenses')
@@ -42,8 +47,8 @@ class ExpenseTracker:
             print("No expenses to display")
         else:
             print("Expenses:")
-            for i, expense in enumerate(self.expenses):
-                print(f"{expense[0]}. {expense[1]} - {expense[2]} - {expense[3]}")
+            for exp in expenses:
+                print(f"{exp[0]}. {exp[1]} - {exp[2]} - {exp[3]}")
     
     def total_expenses(self):
         self.cursor.execute('SELECT SUM(amount) FROM expenses')
